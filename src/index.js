@@ -342,7 +342,3 @@ export default {
 	customRegex: facade.customRegex,
 	domainTypes: domainTypes,
 };
-
-// Export for imported packages (used for custom lambdas and messages).
-export { default as messages } from "./messages";
-export { default as lambdas } from "./lambdas";

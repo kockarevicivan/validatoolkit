@@ -1,6 +1,6 @@
 {
   "name": "validatoolkit",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "module",
   "description": "Simple and specific validation toolkit for JS projects.",
   "repository": {

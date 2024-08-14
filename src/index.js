@@ -1,5 +1,127 @@
-import messages from "./messages.js";
-import lambdas from "./lambdas.js";
+export const messages = {
+	required: function () {
+		return "Field is required.";
+	},
+	notNull: function () {
+		return "Field cannot be null.";
+	},
+	notUndefined: function () {
+		return "Field cannot be undefined.";
+	},
+	maxValue: function (maximum) {
+		return "Value cannot be greater than " + maximum + ".";
+	},
+	minValue: function (minimum) {
+		return "Value must be greater than " + minimum + ".";
+	},
+	maxLength: function (maximumCharacters) {
+		return "Maximum length is " + maximumCharacters + " characters.";
+	},
+	minLength: function (minimumCharacters) {
+		return "Minimum length is " + minimumCharacters + " characters.";
+	},
+	isValue: function (values) {
+		return "Value must be one of the following: " + values.join(", ");
+	},
+	isEmail: function () {
+		return "Value must be an e-mail address.";
+	},
+	isNumeric: function () {
+		return "Value must be numeric.";
+	},
+	isTime: function () {
+		return "Time must be in a valid format: [hh:mm].";
+	},
+	isDate: function () {
+		return "Date must be in a valid format: [dd.mm.yyyy.].";
+	},
+	isUrl: function () {
+		return "Value must be a valid URL.";
+	},
+	isArray: function () {
+		return "Value must be an array.";
+	},
+	isNotEmptyArray: function () {
+		return "Value must not be an empty array.";
+	},
+	customRegex: function () {
+		return "Invalid format.";
+	},
+};
+
+export const lambdas = {
+	required: function (value) {
+		return (
+			value != null &&
+			value != undefined &&
+			(typeof value == "string"
+				? !!(value.length && value.trim().length)
+				: true)
+		);
+	},
+	notNull: function (value) {
+		return value != null;
+	},
+	notUndefined: function (value) {
+		return value != undefined;
+	},
+	maxValue: function (maximum) {
+		return function (value) {
+			return value <= maximum;
+		};
+	},
+	minValue: function (minimum) {
+		return function (value) {
+			return value >= minimum;
+		};
+	},
+	maxLength: function (maximumCharacters) {
+		return function (value) {
+			return value ? value.length <= maximumCharacters : true;
+		};
+	},
+	minLength: function (minimumCharacters) {
+		return function (value) {
+			return value ? value.length >= minimumCharacters : true;
+		};
+	},
+	isValueOf: function (values) {
+		return function (value) {
+			return values.indexOf(value) != -1;
+		};
+	},
+	isEmail: function (value) {
+		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+	},
+	isNumeric: function (value) {
+		return value && !isNaN(value);
+	},
+	isTime: function (value) {
+		return /^(2[0-3]|[0-1]?[\d]):[0-5][\d]$/.test(value);
+	},
+	isDate: function (value) {
+		return /^(0?[1-9]|[12][0-9]|3[01])[\/\-\.](0?[1-9]|1[012])[\/\-\.]\d{4}\.$/.test(
+			value
+		);
+	},
+	isUrl: function (value) {
+		return new RegExp(
+			"^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$",
+			"i"
+		).test(value);
+	},
+	isArray: function (value) {
+		return value instanceof Array;
+	},
+	isNotEmptyArray: function (value) {
+		return value instanceof Array && value.length > 0;
+	},
+	customRegex: function (regex) {
+		return function (value) {
+			return value && !!new RegExp(regex, "i").test(value);
+		};
+	},
+};
 
 // Facade for everything that will be exported by the module.
 const facade = {

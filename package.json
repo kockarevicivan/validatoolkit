@@ -1,0 +1,20 @@
+{
+  "name": "validatoolkit",
+  "version": "1.0.6",
+  "type": "module",
+  "description": "Simple and specific validation toolkit for JS projects.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kockarevicivan/validatoolkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kockarevicivan/validatoolkit/issues"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["validatoolkit", "validation", "simple", "javascript"],
+  "author": "Ivan Kockarevic",
+  "license": "MIT"
+}
